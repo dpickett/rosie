@@ -13,6 +13,9 @@
     "commander": "^2.8.1",
     "fs-extra": "^0.24.0",
     "gulp": "^3.9.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "querystring": "^0.2.0",
+    "request": "^2.64.0",
+    "underscore": "^1.8.3"
   }
 }
