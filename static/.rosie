@@ -1,4 +1,5 @@
 {
   "trelloAccessToken": "",
-  "trelloAppKey": ""
+  "trelloAppKey": "",
+  "trelloBoardId": ""
 }
