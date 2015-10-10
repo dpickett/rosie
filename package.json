@@ -17,5 +17,8 @@
     "querystring": "^0.2.0",
     "request": "^2.64.0",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "jasmine": "^2.3.2"
   }
 }
