@@ -19,6 +19,9 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "jasmine": "^2.3.2"
+    "jasmine": "^2.3.2",
+    "jasmine-core": "^2.3.4",
+    "jasmine-es6": "0.0.18",
+    "jasmine-node": "^1.14.5"
   }
 }
