@@ -4,7 +4,7 @@
   "description": "Automation Tools For Dan",
   "main": "main.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "./node_modules/jasmine-es6/bin/jasmine.js"
   },
   "author": "Dan Pickett",
   "license": "MIT",
