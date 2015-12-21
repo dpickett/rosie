@@ -15,6 +15,8 @@
     "google-auth-library": "^0.9.7",
     "googleapis": "^2.1.7",
     "gulp": "^3.9.0",
+    "jsonfile": "^2.2.3",
+    "moment": "^2.10.6",
     "path": "^0.12.7",
     "querystring": "^0.2.0",
     "request": "^2.64.0",

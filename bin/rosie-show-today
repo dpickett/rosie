@@ -2,5 +2,5 @@
 'use strict';
 
 require("babel/register");
-require('../lib/cli/next-appt');
+require('../lib/cli/show-today');
 
