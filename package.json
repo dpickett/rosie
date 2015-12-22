@@ -10,7 +10,7 @@
     "rosie-show-tomorrow": "./bin/rosie-show-tomorrow"
   },
   "scripts": {
-    "compile": "babel --presets es2015,stage-0 -d lib/ src/",
+    "compile": "./node_modules/babel/bin/babel.js --presets es2015 -d lib/ src/",
     "test": "./node_modules/jasmine-es6/bin/jasmine.js"
   },
   "author": "Dan Pickett",
