@@ -1,6 +1,6 @@
 'use strict';
 
-import Client from '../../lib/trello/client';
+import Client from '../../src/trello/client';
 
 describe('trello client', function(){
   beforeEach(function(){

@@ -1,7 +1,7 @@
 'use strict';
 
-import Board from '../../lib/trello/board.js'
-import Client from '../../lib/trello/client.js'
+import Board from '../../src/trello/board.js'
+import Client from '../../src/trello/client.js'
 
 let sinon = require('sinon');
 require('sinon-as-promised');

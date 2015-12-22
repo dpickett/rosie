@@ -10,6 +10,7 @@
     "rosie-show-tomorrow": "./bin/rosie-show-tomorrow"
   },
   "scripts": {
+    "compile": "babel --presets es2015,stage-0 -d lib/ src/",
     "test": "./node_modules/jasmine-es6/bin/jasmine.js"
   },
   "author": "Dan Pickett",
@@ -30,6 +31,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
     "jasmine": "^2.3.2",
     "jasmine-core": "^2.3.4",
     "jasmine-es6": "0.0.18",

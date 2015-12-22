@@ -1,7 +1,7 @@
 'use strict';
 
-import Event from '../../lib/google/event';
-import EventSerializer from '../../lib/console/event-serializer';
+import Event from '../../src/google/event';
+import EventSerializer from '../../src/console/event-serializer';
 import moment from 'moment';
 
 describe('event serializer', function(){
