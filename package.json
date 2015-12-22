@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "description": "Automation Tools For Dan",
   "main": "main.js",
+  "bin": {
+    "rosie": "./bin/rosie",
+    "rosie-set-incoming": "./bin/rosie-set-incoming",
+    "rosie-show-today": "./bin/rosie-show-today",
+    "rosie-show-tomorrow": "./bin/rosie-show-tomorrow"
+  },
   "scripts": {
     "test": "./node_modules/jasmine-es6/bin/jasmine.js"
   },
