@@ -21,7 +21,7 @@ class SetIncomingTaskCommand {
 
       let incomingListName = 'Incoming';
       let incomingList = _.find(board.lists, function(list){
-        return list.name = incomingListName;
+        return list.name === incomingListName;
       });
 
       let copy = List.create({
