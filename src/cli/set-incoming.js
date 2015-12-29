@@ -9,6 +9,8 @@ import Card from '../trello/card';
 import PreferenceList from '../preference-list';
 import Event from '../google/event';
 
+import EventCard from '../rosie/event-card';
+
 class SetIncomingTaskCommand {
   run(){
     Board.find(this.boardId()).then(function(board){
@@ -46,17 +48,8 @@ class SetIncomingTaskCommand {
           prevPromise = prevPromise.then(function(){
             //omit all day events
             if(event && !event.start.date){
-              console.log("adding " + event.summary);
-              let cardName = '(M) ' + moment(event.start.dateTime).format('hh:mm') + '-' +
-                moment(event.end.dateTime).format('hh:mm') + ' ' +
-                event.summary;
-              let card = new Card({
-                'name': cardName,
-                'idList': incomingList.id,
-                'pos': 'top',
-                'due': moment(event.start.dateTime).toISOString()
-              });
-              return card.save();
+              let eventCard = new EventCard(event, incomingList);
+              return eventCard.save();
             }
             else {
               return Promise.resolve();
