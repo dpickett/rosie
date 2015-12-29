@@ -13,6 +13,7 @@ import PreferenceList from '../preference-list';
 import Event from '../google/event';
 
 import EventCard from '../rosie/event-card';
+import ListCopy from '../rosie/list-copy';
 
 class SetIncomingTaskCommand {
   constructor(options){
@@ -25,29 +26,16 @@ class SetIncomingTaskCommand {
       console.log('Setting incoming tasks...');
       console.log('- copying daily recurring tasks');
       let weekDayListName = 'Weekday Recurring to Copy';
-      let weekDayList = _.find(board.lists, function(list){
-        return list.name === weekDayListName;
-      });
-
       let incomingListName = 'Incoming';
+
+      let listCopy = new ListCopy(board,
+        weekDayListName,
+        incomingListName);
+      listCopy.create();
+
       let incomingList = _.find(board.lists, function(list){
         return list.name === incomingListName;
       });
-
-      let copy = List.create({
-        "name": 'Weekly Recurring to Copy Copy',
-        "idBoard": weekDayList.idBoard,
-        "idListSource": weekDayList.id,
-        "pos": 'bottom'
-      })
-      .then(function(list){
-        list.moveAllCardsTo(incomingList.id).then(function(){
-          list.destroy();
-        });
-      })
-      .catch(function(){
-        console.log('something went wrong');
-      });;
 
       let events;
       if(today){
@@ -73,6 +61,8 @@ class SetIncomingTaskCommand {
             }
           });
         });
+      }).catch(function(err){
+        console.log('something went wrong');
       });
     });
   }
