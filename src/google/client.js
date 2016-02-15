@@ -10,7 +10,9 @@ export default class Client {
     _.bindAll(this,
       'getNewToken',
       'credentials',
-      'authorize');
+      'authorize',
+      'prefList',
+      'token');
   }
 
   credentials() {
@@ -56,6 +58,7 @@ export default class Client {
   }
 
   getNewToken(oauth2Client, resolve, reject) {
+    console.log('gets here');
     var authUrl = oauth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: this.SCOPES
