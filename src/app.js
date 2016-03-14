@@ -7,21 +7,17 @@ const convert = require('koa-convert');
 const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser')();
+const path = require('path');
 const logger = require('koa-logger');
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+const today = require('./routes/today');
 
 // middlewares
 app.use(convert(bodyparser));
 app.use(convert(json()));
 app.use(convert(logger()));
 app.use(convert(require('koa-static')(__dirname + '/public')));
-
-app.use(convert(views('views', {
-  root: __dirname + '/views',
-  default: 'jade'
-})));
 
 app.use(co.wrap(function *(ctx, next){
   ctx.render = co.wrap(ctx.render);
@@ -38,7 +34,7 @@ app.use(co.wrap(function *(ctx, next){
 }));
 
 router.use('/', index.routes(), index.allowedMethods());
-router.use('/users', users.routes(), users.allowedMethods());
+router.use('/today.json', today.routes(), today.allowedMethods())
 
 app.use(router.routes(), router.allowedMethods());
 // response
