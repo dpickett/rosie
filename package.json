@@ -13,7 +13,7 @@
   "scripts": {
     "compile": "babel -d lib/ src/",
     "c": "babel -d lib/ src/",
-    "test": "./node_modules/jasmine-es6/bin/jasmine.js",
+    "test": "./node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=spec/support/jasmine.json",
     "start": "npm run c && ./node_modules/.bin/nodemon src/bin/www"
   },
   "author": "Dan Pickett",
@@ -51,8 +51,8 @@
     "babel-preset-react": "^6.5.0",
     "jasmine": "^2.3.2",
     "jasmine-core": "^2.3.4",
-    "jasmine-es6": "0.0.18",
     "jasmine-node": "^1.14.5",
-    "nodemon": "^1.8.1"
+    "nodemon": "^1.8.1",
+    "sinon": "^1.17.3"
   }
 }
