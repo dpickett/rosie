@@ -1,7 +1,7 @@
 'use strict';
 
 import Version from './version';
-let commander = require('commander');
+import commander from 'commander';
 
 commander
   .version(Version.get())

@@ -19,7 +19,7 @@
   "author": "Dan Pickett",
   "license": "MIT",
   "dependencies": {
-    "babel": "^6",
+    "babel-core": "^6",
     "co": "^4.6.0",
     "colors": "^1.1.2",
     "commander": "^2.8.1",
