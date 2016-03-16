@@ -1,3 +1,5 @@
+require('babel-core/register')
+
 const Koa = require('koa');
 const app = new Koa();
 const router = require('koa-router')();
@@ -12,6 +14,7 @@ const logger = require('koa-logger');
 
 const index = require('./routes/index');
 const today = require('./routes/today');
+
 
 // middlewares
 app.use(convert(bodyparser));

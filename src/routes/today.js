@@ -1,8 +1,10 @@
 var router = require('koa-router')();
-import Event from '../google/event'
+import Event from '../google/event';
 
 router.get('/', function(ctx, next){
-  ctx.body = Event.today();
+  return Event.today().then(function(events){
+    ctx.body = events;
+  });
 });
 
 module.exports = router;
