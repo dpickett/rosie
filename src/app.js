@@ -46,5 +46,10 @@ app.on('error', function(err, ctx){
   log.error('server error', err, ctx);
 });
 
+// Start app
+if (!module.parent) {
+  app.listen(process.env.PORT || 3000);
+}
+
 
 module.exports = app;

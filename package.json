@@ -14,7 +14,7 @@
     "compile": "babel -d lib/ src/",
     "c": "babel -d lib/ src/",
     "test": "./node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=spec/support/jasmine.json",
-    "start": "npm run c && ./node_modules/.bin/nodemon src/bin/www"
+    "start": "NODE_ENV=development ./node_modules/.bin/nodemon --harmony src/app.js"
   },
   "author": "Dan Pickett",
   "license": "MIT",
