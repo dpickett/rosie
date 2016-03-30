@@ -12,8 +12,11 @@ const bodyparser = require('koa-bodyparser')();
 const path = require('path');
 const logger = require('koa-logger');
 
+webpackDevServer = require('koa-webpack-dev');
+
 const index = require('./routes/index');
 const today = require('./routes/today');
+
 
 
 // middlewares
@@ -21,6 +24,16 @@ app.use(convert(bodyparser));
 app.use(convert(json()));
 app.use(convert(logger()));
 app.use(convert(require('koa-static')(__dirname + '/public')));
+
+if(process.env.NODE_ENV === 'development') {
+  app.use(convert(webpackDevServer({
+    config: './webpack.config.js',
+    // webRoot: '/javascripts/assets/',
+    log: {
+      level: 'info'
+    }
+  })));
+}
 
 app.use(co.wrap(function *(ctx, next){
   ctx.render = co.wrap(ctx.render);
