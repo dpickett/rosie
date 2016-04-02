@@ -3,12 +3,12 @@ var path = require('path');
 
 module.exports = {
   entry: {
-    client: __dirname + "/src/app/client.js",
+    client: __dirname + "/src/client/main.js",
   },
 
   output: {
     path: path.resolve(__dirname, "public/javascripts"),
-    publicPath: '/assets',
+    publicPath: '/javascripts',
     filename: '[name].js',
     chunkFilename: '[name].[chunkhash].js'
   },

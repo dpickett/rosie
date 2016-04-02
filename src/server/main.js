@@ -28,7 +28,7 @@ app.use(convert(require('koa-static')(__dirname + '/public')));
 if(process.env.NODE_ENV === 'development') {
   app.use(convert(webpackDevServer({
     config: './webpack.config.js',
-    // webRoot: '/javascripts/assets/',
+    webRoot: __dirname + '../public',
     log: {
       level: 'info'
     }
