@@ -19,6 +19,7 @@
   "author": "Dan Pickett",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.9.1",
     "babel-core": "^6",
     "babel-preset-stage-0": "^6.5.0",
     "co": "^4.6.0",
@@ -45,7 +46,10 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.1",
+    "react-router": "^2.0.1",
+    "react-router-redux": "^4.0.1",
     "redux": "^3.3.1",
+    "redux-promise": "^0.5.3",
     "redux-thunk": "^2.0.1",
     "request": "^2.64.0",
     "underscore": "^1.8.3"
