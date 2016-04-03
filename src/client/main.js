@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux'
+import promiseMiddleware from 'redux-promise';
 
 import RosieApp from './containers/rosie-app';
 
@@ -22,22 +23,18 @@ function configureStore(initialState) {
     rootReducer,
     {},
     applyMiddleware(
+      promiseMiddleware
     )
   )
 }
 
-const store = configureStore(rootReducer, browserHistory);
+const store = configureStore({}, browserHistory);
 const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: (state) => state.router,
 });
 
-// Now that we have the Redux store, we can create our routes. We provide
-// the store to the route definitions so that routes have access to it for
-// hooks such as `onEnter`.
 const routes = makeRoutes(store);
 
-// Now that redux and react-router have been configured, we can render the
-// React application to the DOM!
 ReactDOM.render(
   <RosieApp history={history} routes={routes} store={store} />,
   document.getElementById('root')
