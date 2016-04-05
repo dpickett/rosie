@@ -2,12 +2,13 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AgendaListItem from '../components/agenda-list-item';
+import RefreshButton from './refresh-button';
 
 import { fetchTodaysAgenda } from '../actions/index';
 
 class TodaysAgenda extends Component {
   componentWillMount(){
-    this.props.fetchTodaysAgenda();
+    this.fetchTodaysAgenda();
   }
 
   renderEvents() {
@@ -27,11 +28,16 @@ class TodaysAgenda extends Component {
     return (
       <div>
         <h1>Today</h1>
+        <RefreshButton />
         <ol className="events">
           { this.renderEvents() }
         </ol>
       </div>
     );
+  }
+
+  fetchTodaysAgenda(){
+    this.props.fetchTodaysAgenda();
   }
 }
 
