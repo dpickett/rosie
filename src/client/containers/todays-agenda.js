@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import moment from 'moment';
+import AgendaListItem from '../components/agenda-list-item';
 
 import { fetchTodaysAgenda } from '../actions/index';
 
@@ -13,29 +13,9 @@ class TodaysAgenda extends Component {
   renderEvents() {
     if(this.props.events){
       return this.props.events.map((event) => {
-        let timeLabel;
-        let eventClass;
-        if(event.start.dateTime){
-          timeLabel = `${event.startTime} - ${event.endTime}`;
-          if(moment(event.start.dateTime) < moment()){
-            eventClass = 'past';
-          }
-          else {
-            eventClass = 'future';
-          }
-        }
-        else {
-          timeLabel = 'All Day';
-          eventClass = 'future';
-        }
         return (
-          <li key={event.id} className={eventClass}>
-            <strong>
-            {timeLabel}
-            </strong>&nbsp;-&nbsp;
-            {event.summary}
-          </li>
-        )
+          <AgendaListItem event={event} key={event.id} />
+        );
       });
     }
     else {
