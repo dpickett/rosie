@@ -5,8 +5,16 @@ import { bindActionCreators } from 'redux';
 import { fetchTrelloColumn } from '../actions/index';
 
 class TrelloList extends Component {
+  fetchColumn(){
+    if(!this.props.cards[this.trelloColumnName()]){
+      this.props.fetchTrelloColumn(this.trelloColumnName());
+    }
+  }
   componentWillMount(){
-    this.props.fetchTrelloColumn(this.trelloColumnName());
+    this.fetchColumn();
+  }
+  componentDidUpdate(){
+    this.fetchColumn();
   }
 
   trelloColumnName(){
