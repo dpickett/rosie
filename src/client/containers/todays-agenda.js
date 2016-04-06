@@ -28,7 +28,6 @@ class TodaysAgenda extends Component {
     return (
       <div>
         <h1>Today</h1>
-        <RefreshButton />
         <ol className="events">
           { this.renderEvents() }
         </ol>
