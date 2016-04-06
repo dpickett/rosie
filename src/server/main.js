@@ -1,5 +1,4 @@
-const Koa = require('koa');
-const app = new Koa();
+const Koa = require('koa'); const app = new Koa();
 const router = require('koa-router')();
 const views = require('koa-views');
 const co = require('co');
@@ -12,6 +11,7 @@ const logger = require('koa-logger');
 
 const index = require('./routes/index');
 const today = require('./routes/today');
+const trelloRoutes = require('./routes/trello');
 
 import _debug from 'debug';
 import config from '../../config';
@@ -76,7 +76,9 @@ app.use(co.wrap(function *(ctx, next){
 }));
 
 router.use('/', index.routes(), index.allowedMethods());
-router.use('/today.json', today.routes(), today.allowedMethods())
+router.use('/today.json', today.routes(), today.allowedMethods());
+router.use('/trello', trelloRoutes.routes(), trelloRoutes.allowedMethods());
+
 
 app.use(router.routes(), router.allowedMethods());
 // response
