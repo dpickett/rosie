@@ -14,9 +14,7 @@ import rootReducer from './reducers/root-reducer';
 import makeRoutes from './containers/routes';
 
 
-const browserHistory = useRouterHistory(createBrowserHistory)({
-  basename: 'SomeName',
-});
+const browserHistory = useRouterHistory(createBrowserHistory)({});
 
 function configureStore(initialState) {
   return createStore(

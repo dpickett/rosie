@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const FETCH_TODAYS_AGENDA = 'FETCH_TODAYS_AGENDA';
+export const FETCH_TRELLO_COLUMN = 'FETCH_TRELLO_COLUMN';
 
 //TODO: make this configurable based on ENV
 const ROOT_URL = 'http://localhost:3000'
@@ -12,4 +13,13 @@ export function fetchTodaysAgenda(){
     type: 'FETCH_TODAYS_AGENDA',
     payload: req
   };
+}
+
+export function fetchTrelloColumn(columnName){
+  const req = axios.get(`${ROOT_URL}/trello/${encodeURIComponent(columnName)}.json`);
+
+  return {
+    type: FETCH_TRELLO_COLUMN,
+    payload: req
+  }
 }
