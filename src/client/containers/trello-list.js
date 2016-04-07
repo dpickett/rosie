@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 
 import { fetchTrelloColumn } from '../actions/index';
 
+import TrelloCard from '../components/trello-card';
+
 class TrelloList extends Component {
   fetchColumn(){
     if(!this.props.cards[this.trelloColumnName()]){
@@ -26,7 +28,7 @@ class TrelloList extends Component {
     if(this.props.cards && this.props.cards[this.trelloColumnName()]){
       return this.props.cards[this.trelloColumnName()].map((card) => {
         return (
-          <li key={card.id}>{card.name}</li>
+          <TrelloCard {...card} />
         );
       });
     }
