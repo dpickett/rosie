@@ -1,14 +1,20 @@
 var webpack = require('webpack');
 var path = require('path');
 
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import cssnano from 'cssnano';
+
+let extractSassPlugin = new ExtractTextPlugin('[name].css');
+
 module.exports = {
   entry: {
     client: __dirname + "/src/client/main.js",
+    style: __dirname + "/src/client/css.js"
   },
 
   output: {
-    path: path.resolve(__dirname, "public/javascripts"),
-    publicPath: '/javascripts',
+    path: path.resolve(__dirname, "public/assets"),
+    publicPath: '/assets',
     filename: '[name].js',
     chunkFilename: '[name].[chunkhash].js'
   },
@@ -17,7 +23,8 @@ module.exports = {
   ],
 
   resolve: {
-    extensions: ["", ".js", ".jsx"],
+    extensions: ["", ".js", ".jsx", "scss", "css"],
+    modulesDirectories: ["node_modules", "bower_components"]
   },
 
   module: {
@@ -26,9 +33,44 @@ module.exports = {
       { test: /\.json/, loader: "json" },
       // { test: /\.(woff|woff2)/, loader: "url?limit=100000" },
       { test: /\.(png|jpg|jpeg|gif|svg)/, loader: "url?limit=100000" },
-      // { test: /\.(ttf|eot)/, loader: "file" },
+      { test: /\.css$|\.scss$/,
+        loader: extractSassPlugin.extract(["style", "css", "sass"]),
+      }// { test: /\.(ttf|eot)/, loader: "file" },
     ],
   },
+
+  postcss: [
+    cssnano({
+      autoprefixer: {
+        add: true,
+        remove: true,
+        browsers: ['last 2 versions', '> 10% in US', 'ie >= 9'],
+      },
+      discardComments: {
+        removeAll: true,
+      },
+      discardUnused: false,
+      mergeIdents: false,
+      reduceIdents: false,
+      safe: true,
+      sourcemap: true,
+    }),
+  ],
+  plugins: [
+    extractSassPlugin,
+    // new webpack.ResolverPlugin(
+      // new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(".bower.json", ["main"])
+    // ),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        unused: true,
+        dead_code: true,
+        warnings: false,
+      },
+    }),
+  ]
 
   // plugins: [
     // new webpack.PrefetchPlugin("react"),
