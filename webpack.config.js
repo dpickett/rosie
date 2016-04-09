@@ -23,7 +23,7 @@ module.exports = {
   ],
 
   resolve: {
-    extensions: ["", ".js", ".jsx", "scss", "css"],
+    extensions: ["", ".js", ".jsx"],
     modulesDirectories: ["node_modules", "bower_components"]
   },
 
@@ -34,7 +34,7 @@ module.exports = {
       // { test: /\.(woff|woff2)/, loader: "url?limit=100000" },
       { test: /\.(png|jpg|jpeg|gif|svg)/, loader: "url?limit=100000" },
       { test: /\.css$|\.scss$/,
-        loader: extractSassPlugin.extract(["style", "css", "sass"]),
+        loader: ExtractTextPlugin.extract("style", "css!sass!postcss?outputStyle=expanded")
       }// { test: /\.(ttf|eot)/, loader: "file" },
     ],
   },

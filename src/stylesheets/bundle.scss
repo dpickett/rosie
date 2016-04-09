@@ -1,7 +1,3 @@
-/* @import "~foundation-sites/scss/foundation"; */
-/* @import "./testing"; */
+@import "~foundation-sites/scss/foundation";
+@include foundation-everything;
 
-$red: #330000;
-body {
-  background-color: $red;
-}
