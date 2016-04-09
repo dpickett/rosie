@@ -1,3 +1,4 @@
 @import "~foundation-sites/scss/foundation";
-@include foundation-everything;
+/* use true to make use of flexbox */
+@include foundation-everything(true);
 
