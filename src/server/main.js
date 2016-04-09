@@ -1,8 +1,3 @@
-import { System } from 'es6-module-loader';
-System.import('dotenv').then((dotenv) => {
-  dotenv.config();
-});
-
 const Koa = require('koa'); const app = new Koa();
 const router = require('koa-router')();
 const views = require('koa-views');

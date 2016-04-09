@@ -1,8 +1,10 @@
 'use strict';
 
-let fs = require('fs-extra');
-let path = require('path');
-let jsonfile = require('jsonfile');
+import fs from 'fs-extra';
+import path from 'path';
+import jsonfile from 'jsonfile';
+
+import config from '../config';
 
 export default class PreferenceList {
   constructor(prefFilePath){
@@ -31,12 +33,32 @@ export default class PreferenceList {
   }
 
   loadPrefs(){
-    if(!this.prefs) {
-      if(!this.exists()) {
-        this.buildFromTemplate();
-        return null;
+    if(config.use_pref_env_vars){
+      console.log('using env vars');
+      this.prefs = {
+        "trelloAccessToken": process.env.TRELLO_ACCESS_TOKEN,
+        "trelloAppKey": process.env.TRELLO_APP_KEY,
+        "trelloBoardId": process.env.TRELLO_BOARD_ID,
+        "google": {
+          "client_id": process.env.GOOGLE_CLIENT_ID,
+          "client_secret": process.env.GOOGLE_CLIENT_SECRET,
+          "credentials": {
+            "access_token": process.env.GOOGLE_ACCESS_TOKEN,
+            "token_type": "Bearer",
+            "refresh_token": process.env.GOOGLE_REFRESH_TOKEN,
+            "expiry_date": process.env.GOOGLE_EXPIRY_DATE
+          }
+        }
       }
-      this.prefs = jsonfile.readFileSync(this.path());
+    }
+    else {
+      if(!this.prefs) {
+        if(!this.exists()) {
+          this.buildFromTemplate();
+          return null;
+        }
+        this.prefs = jsonfile.readFileSync(this.path());
+      }
     }
   }
 

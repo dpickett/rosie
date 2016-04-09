@@ -3,9 +3,27 @@ import _debug from 'debug';
 import path from 'path';
 import { argv } from 'yargs';
 
+import Dotenv from 'dotenv';
+Dotenv.config();
+// couldn't get promise based imports working
+// so it is now a hard dependendency :-( lame
+// import { System } from 'es6-module-loader';
+ // var System = require('es6-module-loader').System;
+// System.transpiler = 'babel';
+
+// System.import('dotenv').then((dotenv) => {
+  // console.log('loading dotenv')
+  // dotenv.config({
+    // path: "../.env"
+  // });
+// }).catch((e) => {
+  // console.log("Error loading dotenv" + e);
+// });
+
 const debug = _debug('app:config:_base');
 const config = {
   env : process.env.NODE_ENV || 'development',
+  use_pref_env_vars : process.env.USE_PREF_ENV_VARS || false,
 
   // ----------------------------------
   // Project Structure
