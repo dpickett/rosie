@@ -1,4 +1,6 @@
 @import "~foundation-sites/scss/foundation";
+$fa-font-path:   "../../node_modules/font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
 /* use true to make use of flexbox */
 @include foundation-everything(true);
 

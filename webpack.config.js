@@ -31,8 +31,8 @@ module.exports = {
     loaders: [
       { test: /\.(js|jsx)/, exclude: /node_modules/, loaders: ['babel-loader'] },
       { test: /\.json/, loader: "json" },
-      // { test: /\.(woff|woff2)/, loader: "url?limit=100000" },
-      { test: /\.(png|jpg|jpeg|gif|svg)/, loader: "url?limit=100000" },
+      { test: /\.(woff|woff2|eot|ttf)/, loader: "file-loader" },
+      { test: /\.(png|jpg|jpeg|gif|svg)/, loader: "file-loader" },
       { test: /\.css$|\.scss$/,
         loader: ExtractTextPlugin.extract("style", "css!sass!postcss?outputStyle=expanded")
       }// { test: /\.(ttf|eot)/, loader: "file" },
