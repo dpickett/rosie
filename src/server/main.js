@@ -1,20 +1,33 @@
-const Koa = require('koa'); const app = new Koa();
-const router = require('koa-router')();
-const views = require('koa-views');
-const co = require('co');
-const convert = require('koa-convert');
-const json = require('koa-json');
-const onerror = require('koa-onerror');
-const bodyparser = require('koa-bodyparser')();
-const path = require('path');
-const logger = require('koa-logger');
+import Koa from 'koa';
+import routerBase from 'koa-router';
+import views from 'koa-views';
+import co from 'co';
+import convert from 'koa-convert';
+import json from 'koa-json';
+import onerror from 'koa-onerror';
+import bodyParserBase from 'koa-bodyparser';
+import path from 'path';
+import logger from 'koa-logger';
+import config from '../../config';
+import session from 'koa-session';
+import passport from 'koa-passport';
 
-const index = require('./routes/index');
-const today = require('./routes/today');
-const trelloRoutes = require('./routes/trello');
+const bodyParser = bodyParserBase();
+const app = new Koa();
+const router = routerBase();
+
+app.keys = [config.secret_key_base];
+app.use(convert(session({}, app)));
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+import index from './routes/index';
+import today from './routes/today';
+import trelloRoutes from './routes/trello';
+import requireSignIn from './routes/require-sign-in';
 
 import _debug from 'debug';
-import config from '../../config';
 import serve from 'koa-static';
 import webpack from 'webpack';
 import webpackConfig from '../../webpack.config'
@@ -24,7 +37,7 @@ import webpackHMRMiddleware from './middleware/webpack-hmr'
 const paths = config.utils_paths
 
 // middlewares
-app.use(convert(bodyparser));
+app.use(convert(bodyParser));
 app.use(convert(json()));
 app.use(convert(logger()));
 app.use(convert(require('koa-static')(__dirname + '/public')));
@@ -75,7 +88,23 @@ app.use(co.wrap(function *(ctx, next){
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 }));
 
+// Require authentication for now
+app.use(function(ctx, next) {
+  if (ctx.isAuthenticated()) {
+    return next();
+  } else {
+    let signInPath = '/require-sign-in';
+    if(ctx.request.url != signInPath){
+      ctx.redirect(signInPath);
+    }
+    else {
+      return next();
+    }
+  }
+})
+
 router.use('/', index.routes(), index.allowedMethods());
+router.use('/require-sign-in', requireSignIn.routes(), requireSignIn.allowedMethods());
 router.use('/today.json', today.routes(), today.allowedMethods());
 router.use('/trello', trelloRoutes.routes(), trelloRoutes.allowedMethods());
 

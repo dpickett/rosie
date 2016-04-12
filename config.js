@@ -24,6 +24,7 @@ const debug = _debug('app:config:_base');
 const config = {
   env : process.env.NODE_ENV || 'development',
   use_pref_env_vars : process.env.USE_PREF_ENV_VARS || false,
+  secret_key_base: process.env.SECRET_KEY_BASE,
 
   // ----------------------------------
   // Project Structure
