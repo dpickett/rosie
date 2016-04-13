@@ -49,6 +49,7 @@
     "koa-static": "^1.5.2",
     "koa-views": "^3.1.0",
     "moment": "^2.10.6",
+    "passport-google-oauth2": "^0.1.6",
     "path": "^0.12.7",
     "querystring": "^0.2.0",
     "react": "^0.14.7",

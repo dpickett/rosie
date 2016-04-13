@@ -10,7 +10,6 @@ import path from 'path';
 import logger from 'koa-logger';
 import config from '../../config';
 import session from 'koa-session';
-import passport from 'koa-passport';
 
 const bodyParser = bodyParserBase();
 const app = new Koa();
@@ -19,8 +18,45 @@ const router = routerBase();
 app.keys = [config.secret_key_base];
 app.use(convert(session({}, app)));
 
-app.use(passport.initialize())
-app.use(passport.session())
+import passport from 'koa-passport';
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
+
+passport.use(new GoogleStrategy({
+    clientID:     process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  return done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  return done(null, user);
+});
+
+let authRouter = new routerBase();
+authRouter.get('/auth/google',
+  passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/plus.login']
+  })
+);
+
+// authRouter.get('/auth/google/callback', passport.authenticate('google', {
+    // failureRedirect: '/require-sign-in',
+    // successRedirect: '/'
+  // })
+// );
+
+app.use(authRouter.middleware());
 
 import index from './routes/index';
 import today from './routes/today';
@@ -89,19 +125,19 @@ app.use(co.wrap(function *(ctx, next){
 }));
 
 // Require authentication for now
-app.use(function(ctx, next) {
-  if (ctx.isAuthenticated()) {
-    return next();
-  } else {
-    let signInPath = '/require-sign-in';
-    if(ctx.request.url != signInPath){
-      ctx.redirect(signInPath);
-    }
-    else {
-      return next();
-    }
-  }
-})
+// app.use(function(ctx, next) {
+  // if (ctx.isAuthenticated()) {
+    // return next();
+  // } else {
+    // let signInPath = '/require-sign-in';
+    // if(ctx.request.url != signInPath && !ctx.request.url.match(/\/auth\//)){
+      // ctx.redirect(signInPath);
+    // }
+    // else {
+      // return next();
+    // }
+  // }
+// })
 
 router.use('/', index.routes(), index.allowedMethods());
 router.use('/require-sign-in', requireSignIn.routes(), requireSignIn.allowedMethods());
