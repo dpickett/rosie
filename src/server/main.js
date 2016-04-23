@@ -9,54 +9,11 @@ import bodyParserBase from 'koa-bodyparser';
 import path from 'path';
 import logger from 'koa-logger';
 import config from '../../config';
-import session from 'koa-session';
+import session from 'koa-generic-session';
 
 const bodyParser = bodyParserBase();
 const app = new Koa();
 const router = routerBase();
-
-app.keys = [config.secret_key_base];
-app.use(convert(session({}, app)));
-
-import passport from 'koa-passport';
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
-
-passport.use(new GoogleStrategy({
-    clientID:     process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    return done(null, profile);
-  }
-));
-
-passport.serializeUser(function(user, done) {
-  return done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  return done(null, user);
-});
-
-let authRouter = new routerBase();
-authRouter.get('/auth/google',
-  passport.authenticate('google', {
-    scope: ['https://www.googleapis.com/auth/plus.login']
-  })
-);
-
-// authRouter.get('/auth/google/callback', passport.authenticate('google', {
-    // failureRedirect: '/require-sign-in',
-    // successRedirect: '/'
-  // })
-// );
-
-app.use(authRouter.middleware());
 
 import index from './routes/index';
 import today from './routes/today';
@@ -74,8 +31,12 @@ const paths = config.utils_paths
 
 // middlewares
 app.use(convert(bodyParser));
-app.use(convert(json()));
 app.use(convert(logger()));
+
+app.keys = [config.secret_key_base];
+app.use(convert(session()));
+
+app.use(convert(json()));
 app.use(convert(require('koa-static')(__dirname + '/public')));
 
 // ------------------------------------
@@ -124,21 +85,6 @@ app.use(co.wrap(function *(ctx, next){
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 }));
 
-// Require authentication for now
-// app.use(function(ctx, next) {
-  // if (ctx.isAuthenticated()) {
-    // return next();
-  // } else {
-    // let signInPath = '/require-sign-in';
-    // if(ctx.request.url != signInPath && !ctx.request.url.match(/\/auth\//)){
-      // ctx.redirect(signInPath);
-    // }
-    // else {
-      // return next();
-    // }
-  // }
-// })
-
 router.use('/', index.routes(), index.allowedMethods());
 router.use('/require-sign-in', requireSignIn.routes(), requireSignIn.allowedMethods());
 router.use('/today.json', today.routes(), today.allowedMethods());
@@ -147,9 +93,53 @@ router.use('/trello', trelloRoutes.routes(), trelloRoutes.allowedMethods());
 
 app.use(router.routes(), router.allowedMethods());
 // response
-
 app.on('error', function(err, ctx){
   log.error('server error', err, ctx);
+})
+
+import passport from './lib/auth';
+app.use(passport.initialize());
+app.use(passport.session());
+
+let authRouter = new routerBase();
+authRouter.get('/auth/github',
+  passport.authenticate('github', {
+    scope: ['profile', 'email']
+  })
+);
+
+// authRouter.get('/auth/google',
+  // passport.authenticate('google', {
+    // scope: ['profile', 'email']
+  // })
+// )
+
+// authRouter.get('/auth/google/callback', function(ctx, next){
+  // return passport.authenticate('google', function(user, info, status) {
+    // console.log(user);
+    // console.log(info);
+    // ctx.type = 'json'
+    // if (user === false) {
+      // ctx.status = 401
+      // ctx.body = { success: false }
+    // } else {
+      // ctx.body = { success: true }
+      // return ctx.login(user)
+    // }
+  // })(ctx, next);
+// });
+
+authRouter.get('/auth/github/callback', function(ctx, next){
+  return passport.authenticate('github', function(user, info, status) {
+    if (user) {
+      ctx.redirect('/');
+    } else {
+      ctx.redirect('/require-sign-in');
+    }
+  })(ctx, next);
 });
+
+
+app.use(authRouter.middleware());
 
 module.exports = app;
