@@ -13,7 +13,6 @@ import session from 'koa-generic-session';
 
 const bodyParser = bodyParserBase();
 const app = new Koa();
-const router = routerBase();
 
 import index from './routes/index';
 import today from './routes/today';
@@ -85,53 +84,28 @@ app.use(co.wrap(function *(ctx, next){
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 }));
 
-router.use('/', index.routes(), index.allowedMethods());
+import passport from './lib/auth';
+app.use(passport.initialize());
+app.use(passport.session());
+
+const router = new routerBase();
 router.use('/require-sign-in', requireSignIn.routes(), requireSignIn.allowedMethods());
-router.use('/today.json', today.routes(), today.allowedMethods());
-router.use('/trello', trelloRoutes.routes(), trelloRoutes.allowedMethods());
 
-
-app.use(router.routes(), router.allowedMethods());
 // response
 app.on('error', function(err, ctx){
   log.error('server error', err, ctx);
 })
 
-import passport from './lib/auth';
-app.use(passport.initialize());
-app.use(passport.session());
-
-let authRouter = new routerBase();
-authRouter.get('/auth/github',
+router.get('/auth/github',
   passport.authenticate('github', {
     scope: ['profile', 'email']
   })
 );
 
-// authRouter.get('/auth/google',
-  // passport.authenticate('google', {
-    // scope: ['profile', 'email']
-  // })
-// )
-
-// authRouter.get('/auth/google/callback', function(ctx, next){
-  // return passport.authenticate('google', function(user, info, status) {
-    // console.log(user);
-    // console.log(info);
-    // ctx.type = 'json'
-    // if (user === false) {
-      // ctx.status = 401
-      // ctx.body = { success: false }
-    // } else {
-      // ctx.body = { success: true }
-      // return ctx.login(user)
-    // }
-  // })(ctx, next);
-// });
-
-authRouter.get('/auth/github/callback', function(ctx, next){
+router.get('/auth/github/callback', function(ctx, next){
   return passport.authenticate('github', function(user, info, status) {
     if (user) {
+      ctx.logIn(user);
       ctx.redirect('/');
     } else {
       ctx.redirect('/require-sign-in');
@@ -139,7 +113,26 @@ authRouter.get('/auth/github/callback', function(ctx, next){
   })(ctx, next);
 });
 
+app.use(router.routes(), router.allowedMethods());
 
-app.use(authRouter.middleware());
+const securedRouter = new routerBase()
+
+securedRouter.use(function(ctx, next) {
+  if (ctx.passport.user) {
+    return next();
+  } else {
+    if(ctx.request.accepts('json')){
+      ctx.throw(401, 'access_denied');
+    }
+    else {
+      ctx.redirect('/require-sign-in');
+    }
+  }
+});
+
+securedRouter.use('/trello', trelloRoutes.routes(), trelloRoutes.allowedMethods());
+securedRouter.use('/today.json', today.routes(), today.allowedMethods());
+
+app.use(securedRouter.routes(), securedRouter.allowedMethods());
 
 module.exports = app;
