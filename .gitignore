@@ -2,3 +2,4 @@ node_modules
 lib
 bower_components
 .env
+npm-debug.log

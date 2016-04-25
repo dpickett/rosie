@@ -31,11 +31,19 @@ class CycleControls extends Component {
       }
     }
     else {
-      if(this.interval){
-        clearInterval(this.interval);
-        this.interval = null;
-      }
+      this.flushInterval()
     }
+  }
+
+  flushInterval(){
+    if(this.interval){
+      clearInterval(this.interval);
+      this.interval = null;
+    }
+  }
+
+  componentWillUnmount(){
+    this.flushInterval();
   }
 
   render(){
