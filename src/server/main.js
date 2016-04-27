@@ -122,7 +122,9 @@ securedRouter.use(function(ctx, next) {
     return next();
   } else {
     if(ctx.request.accepts('json')){
-      ctx.throw(401, 'access_denied');
+      ctx.type = 'json';
+      ctx.status = 401;
+      ctx.body = 'access denied';
     }
     else {
       ctx.redirect('/require-sign-in');

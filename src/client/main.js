@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux'
 import promiseMiddleware from 'redux-promise';
+import authorizationCheck from './middleware/authorization-check';
 
 import RosieApp from './containers/rosie-app';
 
@@ -16,12 +17,19 @@ import makeRoutes from './containers/routes';
 
 const browserHistory = useRouterHistory(createBrowserHistory)({});
 
+import { routerMiddleware } from 'react-router-redux'
+
+// Apply the middleware to the store
+const routeMiddleware = routerMiddleware(browserHistory)
+
 function configureStore(initialState) {
   return createStore(
     rootReducer,
     {},
     applyMiddleware(
-      promiseMiddleware
+      promiseMiddleware,
+      authorizationCheck,
+      routeMiddleware
     )
   )
 }
