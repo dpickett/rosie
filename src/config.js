@@ -103,7 +103,7 @@ config.globals = {
 // ------------------------------------
 // Validate Vendor Dependencies
 // ------------------------------------
-const pkg = require('./package.json')
+const pkg = require('../package.json')
 
 config.compiler_vendor = config.compiler_vendor
   .filter((dep) => {

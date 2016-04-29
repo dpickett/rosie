@@ -8,7 +8,7 @@ import onerror from 'koa-onerror';
 import bodyParserBase from 'koa-bodyparser';
 import path from 'path';
 import logger from 'koa-logger';
-import config from '../../config';
+import config from '../config';
 import session from 'koa-generic-session';
 
 const bodyParser = bodyParserBase();
@@ -25,6 +25,8 @@ import webpack from 'webpack';
 import webpackConfig from '../../webpack.config'
 import webpackDevMiddleware from './middleware/webpack-dev'
 import webpackHMRMiddleware from './middleware/webpack-hmr'
+
+import 'babel-polyfill';
 
 const paths = config.utils_paths
 
@@ -56,13 +58,6 @@ if (config.env === 'development') {
   // when the application is compiled.
   app.use(convert(serve(paths.client('static'))))
 } else {
-  debug(
-    'Server is being run outside of live development mode. This starter kit ' +
-    'does not provide any production-ready server functionality. To learn ' +
-    'more about deployment strategies, check out the "deployment" section ' +
-    'in the README.'
-  )
-
   // Serving ~/dist by default. Ideally these files should be served by
   // the web server and not the app server, but this helps to demo the
   // server in production.

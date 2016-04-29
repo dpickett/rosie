@@ -1,10 +1,10 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
 
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import cssnano from 'cssnano';
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const cssnano = require('cssnano');
 
-let extractSassPlugin = new ExtractTextPlugin('[name].css');
+var extractSassPlugin = new ExtractTextPlugin('[name].css');
 
 module.exports = {
   entry: {
