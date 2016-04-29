@@ -132,4 +132,5 @@ config.utils_paths = (() => {
   }
 })()
 
+module.exports = config;
 export default config;
