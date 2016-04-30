@@ -38,7 +38,8 @@ app.keys = [config.secret_key_base];
 app.use(convert(session()));
 
 app.use(convert(json()));
-app.use(convert(require('koa-static')(__dirname + '/public')));
+console.log("serving " + config.path_base + '/public');
+app.use(convert(serve(config.path_base + '/public')));
 
 // ------------------------------------
 // Apply Webpack HMR Middleware
@@ -56,12 +57,12 @@ if (config.env === 'development') {
   // these files. This middleware doesn't need to be enabled outside
   // of development since this directory will be copied into ~/dist
   // when the application is compiled.
-  app.use(convert(serve(paths.client('static'))))
+  // app.use(convert(serve(paths.client('static'))))
 } else {
   // Serving ~/dist by default. Ideally these files should be served by
   // the web server and not the app server, but this helps to demo the
   // server in production.
-  app.use(convert(serve(paths.base(config.dir_dist))))
+  // app.use(convert(serve(paths.base(config.dir_dist))))
 }
 
 

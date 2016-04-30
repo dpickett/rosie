@@ -29,7 +29,7 @@ const config = {
   // ----------------------------------
   // Project Structure
   // ----------------------------------
-  path_base  : path.resolve(__dirname),
+  path_base  : path.resolve(__dirname + "/.."),
   dir_client : 'src/client',
   dir_dist   : 'dist',
   dir_server : 'src/server',
