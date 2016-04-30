@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import jsonfile from 'jsonfile';
 
-import config from '../config';
+import config from './config';
 
 export default class PreferenceList {
   constructor(prefFilePath){
