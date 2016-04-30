@@ -3,3 +3,4 @@ lib
 bower_components
 .env
 npm-debug.log
+public/assets
