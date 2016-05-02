@@ -34,7 +34,6 @@ export default class PreferenceList {
 
   loadPrefs(){
     if(config.use_pref_env_vars){
-      console.log('using env vars');
       this.prefs = {
         "trelloAccessToken": process.env.TRELLO_ACCESS_TOKEN,
         "trelloAppKey": process.env.TRELLO_APP_KEY,
