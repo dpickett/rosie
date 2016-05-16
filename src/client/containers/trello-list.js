@@ -7,11 +7,23 @@ import { fetchTrelloColumn } from '../actions/index';
 import TrelloCard from '../components/trello-card';
 
 class TrelloList extends Component {
+  constructor(){
+    super();
+    this.ttlMinutes = 20;
+    this.ttl = this.ttlMinutes * 60 * 1000;
+  }
+
   fetchColumn(){
-    if(!this.props.cards[this.trelloColumnName()]){
+    if(!this.props.cards[this.trelloColumnName()] || this.ttlExceeded()){
       this.props.fetchTrelloColumn(this.trelloColumnName());
     }
   }
+
+  ttlExceeded(){
+    let age = (new Date()) - this.props.cards[this.trelloColumnName()].refreshedAt;
+    return age > this.ttl;
+  }
+
   componentWillMount(){
     this.fetchColumn();
   }
@@ -26,7 +38,7 @@ class TrelloList extends Component {
 
   renderCards(){
     if(this.props.cards && this.props.cards[this.trelloColumnName()]){
-      return this.props.cards[this.trelloColumnName()].map((card) => {
+      return this.props.cards[this.trelloColumnName()].list.map((card) => {
         return (
           <TrelloCard {...card} />
         );

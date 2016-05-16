@@ -9,7 +9,7 @@ import bodyParserBase from 'koa-bodyparser';
 import path from 'path';
 import logger from 'koa-logger';
 import config from '../config';
-import session from 'koa-generic-session';
+import session from 'koa-session';
 
 const bodyParser = bodyParserBase();
 const app = new Koa();
@@ -35,7 +35,7 @@ app.use(convert(bodyParser));
 app.use(convert(logger()));
 
 app.keys = [config.secret_key_base];
-app.use(convert(session()));
+app.use(convert(session(app)));
 
 app.use(convert(json()));
 console.log("serving " + config.path_base + '/public');

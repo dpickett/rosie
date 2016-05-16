@@ -6,7 +6,10 @@ export default (state = INITIAL_STATE, action) => {
     case FETCH_TRELLO_COLUMN:
       return {
         ...state,
-        [action.payload.data.attrs.name]: action.payload.data.attrs.cards
+        [action.payload.data.attrs.name]: {
+          refreshedAt: new Date(),
+          list: action.payload.data.attrs.cards
+        }
       };
     default:
       return state
