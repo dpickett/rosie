@@ -3,8 +3,11 @@ import _debug from 'debug';
 import path from 'path';
 import { argv } from 'yargs';
 
+import fs from 'fs-extra';
 import Dotenv from 'dotenv';
-Dotenv.config();
+if(fs.existsSync(path.resolve(__dirname + "/../.env"))){
+  Dotenv.config();
+}
 // couldn't get promise based imports working
 // so it is now a hard dependendency :-( lame
 // import { System } from 'es6-module-loader';
