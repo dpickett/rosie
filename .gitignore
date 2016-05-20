@@ -1,5 +1,5 @@
 node_modules
-lib
+lib/*
 bower_components
 .env
 npm-debug.log
