@@ -5,11 +5,8 @@ export const FETCH_TRELLO_COLUMN = 'FETCH_TRELLO_COLUMN';
 
 export const TOGGLE_NAV_CYCLING = 'TOGGLE_NAV_CYCLING'
 
-//TODO: make this configurable based on ENV
-const ROOT_URL = 'http://localhost:3000'
-
 export function fetchTodaysAgenda(){
-  const req = axios.get(`${ROOT_URL}/today.json`, {'headers': {
+  const req = axios.get(`/today.json`, {'headers': {
         'Content-Type': 'application/json'
     }});
 
@@ -20,7 +17,7 @@ export function fetchTodaysAgenda(){
 }
 
 export function fetchTrelloColumn(columnName){
-  const req = axios.get(`${ROOT_URL}/trello/${encodeURIComponent(columnName)}.json`, { 'headers': {
+  const req = axios.get(`/trello/${encodeURIComponent(columnName)}.json`, { 'headers': {
         'Content-Type': 'application/json'
     }});
 
