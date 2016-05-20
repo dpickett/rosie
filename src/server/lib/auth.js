@@ -14,17 +14,27 @@ import passport from 'koa-passport';
   // }
 // ));
 
+import config from '../../config';
+
 var GithubStrategy = require('passport-github').Strategy
+var callbackURL = 'http://';
+if(config.env == 'production'){
+  callbackURL = callbackURL + config.server_hostname
+}
+else {
+  callbackURL = callbackURL + config.server_hostname + ":" + config.server_port;
+}
+
+callbackURL = callbackURL + "/auth/github/callback"
+
 passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/github/callback'
+    callbackURL
   },
   function(token, tokenSecret, profile, done) {
     let user = profile;
-    console.log("gets here");
     if(user.username === process.env.GITHUB_USER){
-      console.log(user);
       return done(null, user)
     }
     else {

@@ -43,6 +43,7 @@ const config = {
   // ----------------------------------
   server_host : process.env.APP_HOST || '0.0.0.0',
   server_port : process.env.PORT || 3000,
+  server_hostname : process.env.SERVER_HOST_NAME || 'localhost',
 
   // ----------------------------------
   // Compiler Configuration
