@@ -9,8 +9,6 @@ import TrelloCard from '../components/trello-card';
 class TrelloList extends Component {
   constructor(){
     super();
-    this.ttlMinutes = 20;
-    this.ttl = this.ttlMinutes * 60 * 1000;
   }
 
   fetchColumn(){
@@ -21,7 +19,7 @@ class TrelloList extends Component {
 
   ttlExceeded(){
     let age = (new Date()) - this.props.cards[this.trelloColumnName()].refreshedAt;
-    return age > this.ttl;
+    return age > this.props.listTtlMinutes * 60 * 1000;
   }
 
   componentWillMount(){
@@ -61,7 +59,8 @@ class TrelloList extends Component {
 
 function mapStateToProps(state){
   return {
-    cards: state.cards
+    cards: state.cards,
+    listTtlMinutes: state.listTimeToLive.ttlMinutes
   }
 }
 
