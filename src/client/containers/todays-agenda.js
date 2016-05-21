@@ -11,6 +11,10 @@ class TodaysAgenda extends Component {
     this.fetchTodaysAgenda();
   }
 
+  componentDidUpdate(){
+    this.fetchTodaysAgenda();
+  }
+
   renderEvents() {
     if(this.props.events){
       return this.props.events.map((event) => {
@@ -35,14 +39,23 @@ class TodaysAgenda extends Component {
     );
   }
 
+  ttlExceeded(){
+    let age = (new Date()) - this.props.refreshedAt;
+    return age > this.props.listTtlMinutes * 60 * 1000;
+  }
+
   fetchTodaysAgenda(){
-    this.props.fetchTodaysAgenda();
+    if(!this.events || this.ttlExceeded()){
+      this.props.fetchTodaysAgenda();
+    }
   }
 }
 
 function mapStateToProps(state){
   return {
-    events: state.todaysEvents
+    events: state.todaysEvents.events,
+    refreshedAt: state.todaysEvents.refreshedAt,
+    listTtlMinutes: state.listTimeToLive.ttlMinutes
   }
 }
 
