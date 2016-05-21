@@ -1,4 +1,8 @@
-const INITIAL_STATE = { cycling: true }
+const INITIAL_STATE = {
+  cycling: true,
+  secondsPerItem: 10
+}
+
 import { TOGGLE_NAV_CYCLING } from '../actions/index';
 
 export default function(state = INITIAL_STATE, action){

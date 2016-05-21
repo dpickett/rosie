@@ -27,7 +27,7 @@ class CycleControls extends Component {
   toggleInterval = () => {
     if(this.props.cycling){
       if(!this.interval){
-        this.interval = setInterval(this.cycle, 5000);
+        this.interval = setInterval(this.cycle, this.props.secondsPerItem * 1000);
       }
     }
     else {
@@ -74,6 +74,7 @@ CycleControls.contextTypes = {
 function mapStateToProps(state){
   return {
     cycling: state.navCycle.cycling,
+    secondsPerItem: state.navCycle.secondsPerItem,
     currentLocation: state.router.locationBeforeTransitions
   }
 }
