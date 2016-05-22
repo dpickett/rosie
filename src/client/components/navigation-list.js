@@ -7,7 +7,8 @@ export default class NavigationList extends Component {
       return (
         <NavigationItem key={destination.to}
           to={destination.to}
-          text={destination.text} />
+          text={destination.text}
+          shuffle={destination.shuffle} />
       )
     });
   }
@@ -33,18 +34,22 @@ NavigationList.destinations = [
   },
   {
     to: "/trello/Annual%20Goals",
-    text: "Annual Goals"
+    text: "Annual Goals",
+    shuffle: true
   },
   {
     to: "/trello/Rocks",
-    text: "Rocks"
+    text: "Rocks",
+    shuffle: true
   },
   {
     to: "/trello/This%20Week",
-    text: "This Week"
+    text: "This Week",
+    shuffle: true
   },
   {
     to: "/trello/Done",
-    text: "Done"
+    text: "Done",
+    shuffle: true
   }
 ];

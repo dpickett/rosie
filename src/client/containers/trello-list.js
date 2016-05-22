@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { fetchTrelloColumn } from '../actions/index';
+import { fetchTrelloColumn, shuffleTrelloColumn } from '../actions/index';
 
 import TrelloCard from '../components/trello-card';
 
@@ -22,11 +22,18 @@ class TrelloList extends Component {
     return age > this.props.listTtlMinutes * 60 * 1000;
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.fetchColumn();
+    this.props.shuffleTrelloColumn(this.trelloColumnName());
   }
-  componentDidUpdate(){
+
+  componentWillUpdate(nextProps, nextState){
     this.fetchColumn();
+    if(this.props.location && this.props.location.state && this.props.location.state.shuffle){
+      if(this.props.cards[this.trelloColumnName()] === nextProps.cards[this.trelloColumnName()]) {
+        this.props.shuffleTrelloColumn(this.trelloColumnName());
+      }
+    }
   }
 
   trelloColumnName(){
@@ -38,7 +45,7 @@ class TrelloList extends Component {
     if(this.props.cards && this.props.cards[this.trelloColumnName()]){
       return this.props.cards[this.trelloColumnName()].list.map((card) => {
         return (
-          <TrelloCard {...card} />
+          <TrelloCard {...card} key={card.id} />
         );
       });
     }
@@ -65,7 +72,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({ fetchTrelloColumn }, dispatch);
+  return bindActionCreators({ fetchTrelloColumn, shuffleTrelloColumn }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TrelloList);
