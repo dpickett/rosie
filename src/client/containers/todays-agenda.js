@@ -45,7 +45,7 @@ class TodaysAgenda extends Component {
   }
 
   fetchTodaysAgenda(){
-    if(!this.events || this.ttlExceeded()){
+    if(!this.props.events || this.ttlExceeded()){
       this.props.fetchTodaysAgenda();
     }
   }
