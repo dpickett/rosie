@@ -23,6 +23,10 @@ ol.events {
     background-color: $light-gray;
     color: $dark-gray;
   }
+
+  & li.current {
+    background-color: $success-color;
+  }
 }
 
 ol.trello-list {

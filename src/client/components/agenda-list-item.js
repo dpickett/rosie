@@ -9,8 +9,14 @@ export default class AgendaListItem extends Component {
 
     if(event.start.dateTime){
       timeLabel = `${event.startTime} - ${event.endTime}`;
-      if(moment(event.start.dateTime) < moment()){
+      let now = moment()
+      let start = moment(event.start.dateTime);
+      let end = moment(event.end.dateTime);
+      if(start < now && end < now){
         eventClass = 'past';
+      }
+      else if(start < now && end > now) {
+        eventClass = 'current';
       }
       else {
         eventClass = 'future';
