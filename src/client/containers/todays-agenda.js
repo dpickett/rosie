@@ -7,11 +7,11 @@ import RefreshButton from './refresh-button';
 import { fetchTodaysAgenda } from '../actions/index';
 
 class TodaysAgenda extends Component {
-  componentWillMount(){
+  componentDidMount(){
     this.fetchTodaysAgenda();
   }
 
-  componentDidUpdate(){
+  componentWillUpdate(nextProps, nextState){
     this.fetchTodaysAgenda();
   }
 
