@@ -5,6 +5,10 @@ MAINTAINER Dan Pickett <dan.pickett@gmail.com>
 
 ENV INSTALL_PATH /rosie
 ENV NODE_ENV production
+
+RUN echo "America/New_York" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
 RUN mkdir -p $INSTALL_PATH
 
 WORKDIR $INSTALL_PATH
