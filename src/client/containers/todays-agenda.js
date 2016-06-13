@@ -4,15 +4,15 @@ import { bindActionCreators } from 'redux';
 import AgendaListItem from '../components/agenda-list-item';
 import RefreshButton from './refresh-button';
 
-import { fetchTodaysAgenda } from '../actions/index';
+import { fetchAgenda } from '../actions/index';
 
 class TodaysAgenda extends Component {
   componentDidMount(){
-    this.fetchTodaysAgenda();
+    this.fetchAgenda('today');
   }
 
   componentWillUpdate(nextProps, nextState){
-    this.fetchTodaysAgenda();
+    this.fetchAgenda('today');
   }
 
   renderEvents() {
@@ -44,23 +44,23 @@ class TodaysAgenda extends Component {
     return age > this.props.listTtlMinutes * 60 * 1000;
   }
 
-  fetchTodaysAgenda(){
+  fetchAgenda(key){
     if(!this.props.events || this.ttlExceeded()){
-      this.props.fetchTodaysAgenda();
+      this.props.fetchAgenda(key);
     }
   }
 }
 
 function mapStateToProps(state){
   return {
-    events: state.todaysEvents.events,
-    refreshedAt: state.todaysEvents.refreshedAt,
-    listTtlMinutes: state.listTimeToLive.ttlMinutes
+    events: state.events.today.events,
+    refreshedAt: state.events.today.refreshedAt,
+    listTtlMinutes: state.events.today.ttlMinutes
   }
 }
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({ fetchTodaysAgenda }, dispatch);
+  return bindActionCreators({ fetchAgenda }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodaysAgenda);

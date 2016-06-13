@@ -6,15 +6,17 @@ export const SHUFFLE_TRELLO_COLUMN = 'SHUFFLE_TRELLO_COLUMN';
 
 export const TOGGLE_NAV_CYCLING = 'TOGGLE_NAV_CYCLING'
 
-export function fetchTodaysAgenda(){
-  const req = axios.get(`/today.json`, {'headers': {
+export function fetchAgenda(key){
+  const req = axios.get(`/${key}.json`, {'headers': {
         'Content-Type': 'application/json'
     }});
 
-  return {
-    type: FETCH_TODAYS_AGENDA,
-    payload: req
-  };
+  if(key === 'today'){
+    return {
+      type: FETCH_TODAYS_AGENDA,
+      payload: req
+    };
+  }
 }
 
 export function fetchTrelloColumn(columnName){
