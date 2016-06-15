@@ -6,16 +6,23 @@ export const SHUFFLE_TRELLO_COLUMN = 'SHUFFLE_TRELLO_COLUMN';
 
 export const TOGGLE_NAV_CYCLING = 'TOGGLE_NAV_CYCLING'
 
-export function fetchAgenda(key){
-  const req = axios.get(`/${key}.json`, {'headers': {
-        'Content-Type': 'application/json'
-    }});
+function ttlExceeded(ttl, refreshedAt){
+  const age = (new Date()) - refreshedAt;
+  return age > ttl * 60 * 1000;
+}
 
-  if(key === 'today'){
-    return {
-      type: FETCH_TODAYS_AGENDA,
-      payload: req
-    };
+export function fetchAgenda(key, ttl, refreshedAt){
+  const req = axios.get(`/${key}.json`, {'headers': {
+    'Content-Type': 'application/json'
+  }});
+
+  if(!refreshedAt || ttlExceeded(ttl, refreshedAt)) {
+    if(key === 'today'){
+      return {
+        type: FETCH_TODAYS_AGENDA,
+        payload: req
+      };
+    }
   }
 }
 
