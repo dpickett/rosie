@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 import EventList from '../components/event-list';
 
-import bindEvents from '../lib/bind-events';
+import bindEventsToComponent from '../lib/bind-events';
 
 class TodaysAgenda extends Component {
   render() {
@@ -15,4 +15,4 @@ class TodaysAgenda extends Component {
   }
 }
 
-export default bindEvents('today', TodaysAgenda)
+export default bindEventsToComponent('today', TodaysAgenda)

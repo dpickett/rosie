@@ -1,25 +1,35 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchAgenda } from '../actions/index';
+import React, { Component } from 'react';
 
-export default function(key, klass) {
+export default function(key, Klass) {
   const mapDispatchToProps = function(dispatch) {
     return bindActionCreators({ fetchAgenda }, dispatch);
   }
 
-  klass.prototype.fetchAgenda = function() {
-    this.props.fetchAgenda(key,
-      this.props.listTtlMinutes, this.props.refreshedAt);
-  }
+  class AgendaList extends Component {
+    fetchAgenda () {
+      this.props.fetchAgenda(key,
+        this.props.listTtlMinutes, this.props.refreshedAt);
+    }
 
-  klass.prototype.componentDidMount = function() {
-    this.fetchAgenda()
-  }
+    componentDidMount () {
+      this.fetchAgenda()
+    }
 
-  klass.prototype.componentWillUpdate = function(nextProps, nextState) {
-    this.fetchAgenda()
+    componentWillUpdate (nextProps, nextState) {
+      this.fetchAgenda()
+    }
+
+    render () {
+      return (
+        <Klass {...this.props} />
+      )
+    }
   }
 
   return connect((state) => { return state.events[key] },
-    mapDispatchToProps)(klass)
+    mapDispatchToProps)(AgendaList)
 }
+

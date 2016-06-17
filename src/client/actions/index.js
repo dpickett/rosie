@@ -24,6 +24,11 @@ export function fetchAgenda(key, ttl, refreshedAt){
       };
     }
   }
+  else {
+    return {
+      type: 'NOOP'
+    }
+  }
 }
 
 export function fetchTrelloColumn(columnName){
