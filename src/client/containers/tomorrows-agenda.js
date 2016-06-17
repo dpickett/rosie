@@ -4,7 +4,7 @@ import EventList from '../components/event-list';
 
 import bindEventsToComponent from '../lib/bind-events';
 
-class TodaysAgenda extends Component {
+class TomorrowsAgenda extends Component {
   render() {
     return (
       <div>
@@ -15,4 +15,4 @@ class TodaysAgenda extends Component {
   }
 }
 
-export default bindEventsToComponent('today', TodaysAgenda)
+export default bindEventsToComponent('tomorrow', TomorrowsAgenda)
