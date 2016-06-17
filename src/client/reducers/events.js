@@ -7,7 +7,7 @@ const INITIAL_STATE = {
     ttlMinutes: DEFAULT_TTL
   }
 };
-import { FETCH_TODAYS_AGENDA } from '../actions/index';
+import { FETCH_TODAYS_AGENDA, FETCH_TOMORROWS_AGENDA } from '../actions/index';
 
 export default function(state = INITIAL_STATE, action){
   switch(action.type){
@@ -17,6 +17,16 @@ export default function(state = INITIAL_STATE, action){
         ...state,
         today: {
           ...oldToday,
+          refreshedAt: new Date(),
+          events: action.payload.data
+        }
+      }
+    case FETCH_TOMORROWS_AGENDA:
+      const oldTomorrow = state.tomorrow
+      return {
+        ...state,
+        tomorrow: {
+          ...oldTomorrow,
           refreshedAt: new Date(),
           events: action.payload.data
         }

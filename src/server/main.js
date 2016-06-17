@@ -16,6 +16,7 @@ const app = new Koa();
 
 import index from './routes/index';
 import today from './routes/today';
+import tomorrow from './routes/tomorrow';
 import trelloRoutes from './routes/trello';
 import requireSignIn from './routes/require-sign-in';
 
@@ -130,6 +131,7 @@ securedRouter.use(function(ctx, next) {
 
 securedRouter.use('/trello', trelloRoutes.routes(), trelloRoutes.allowedMethods());
 securedRouter.use('/today.json', today.routes(), today.allowedMethods());
+securedRouter.use('/tomorrow.json', tomorrow.routes(), tomorrow.allowedMethods());
 
 app.use(securedRouter.routes(), securedRouter.allowedMethods());
 

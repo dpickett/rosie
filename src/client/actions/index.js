@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const FETCH_TODAYS_AGENDA = 'FETCH_TODAYS_AGENDA';
+export const FETCH_TOMORROWS_AGENDA = 'FETCH_TOMORROWS_AGENDA';
 export const FETCH_TRELLO_COLUMN = 'FETCH_TRELLO_COLUMN';
 export const SHUFFLE_TRELLO_COLUMN = 'SHUFFLE_TRELLO_COLUMN';
 
@@ -22,6 +23,12 @@ export function fetchAgenda(key, ttl, refreshedAt){
         type: FETCH_TODAYS_AGENDA,
         payload: req
       };
+    }
+    if(key === 'tomorrow'){
+      return {
+        type: FETCH_TOMORROWS_AGENDA,
+        payload: req
+      }
     }
   }
   else {

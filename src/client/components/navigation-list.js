@@ -29,6 +29,10 @@ NavigationList.destinations = [
     text: 'Today'
   },
   {
+    to: '/tomorrow',
+    text: 'Tomorrow'
+  },
+  {
     to: "/trello/Values",
     text: "Values"
   },
