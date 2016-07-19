@@ -47,6 +47,11 @@ NavigationList.destinations = [
     shuffle: true
   },
   {
+    to: "/trello/Weekly%20Goals",
+    text: "Weekly Goals",
+    shuffle: true
+  },
+  {
     to: "/trello/This%20Week",
     text: "This Week",
     shuffle: true
