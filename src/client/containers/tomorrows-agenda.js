@@ -8,7 +8,7 @@ class TomorrowsAgenda extends Component {
   render() {
     return (
       <div>
-        <h1>Today</h1>
+        <h1>Tomorrow</h1>
         <EventList events={ this.props.events } />
       </div>
     );
