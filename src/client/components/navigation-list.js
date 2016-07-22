@@ -37,8 +37,8 @@ NavigationList.destinations = [
     text: "Values"
   },
   {
-    to: "/trello/Annual%20Goals",
-    text: "Annual Goals",
+    to: "/trello/Weekly%20Goals",
+    text: "Weekly Goals",
     shuffle: true
   },
   {
@@ -47,8 +47,8 @@ NavigationList.destinations = [
     shuffle: true
   },
   {
-    to: "/trello/Weekly%20Goals",
-    text: "Weekly Goals",
+    to: "/trello/Annual%20Goals",
+    text: "Annual Goals",
     shuffle: true
   },
   {
