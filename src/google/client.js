@@ -30,7 +30,7 @@ export default class Client {
     return this.prefList().prefs.google.credentials.access_token;
   }
 
-  authorize() {
+  authorize(force) {
     var promiseFunc = function(resolve, reject){
       var clientId = this.prefList().prefs.google.client_id;
       var clientSecret = this.prefList().prefs.google.client_secret;
@@ -39,7 +39,7 @@ export default class Client {
       var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
       // Check if we have previously stored a token.
-      if(!this.token()){
+      if(force || !this.token()){
         this.getNewToken(oauth2Client, resolve, reject);
       }
       else {
@@ -58,7 +58,6 @@ export default class Client {
   }
 
   getNewToken(oauth2Client, resolve, reject) {
-    console.log('gets here');
     var authUrl = oauth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: this.SCOPES
