@@ -90,6 +90,7 @@ router.use('/require-sign-in', requireSignIn.routes(), requireSignIn.allowedMeth
 
 // response
 app.on('error', function(err, ctx){
+  console.log(err);
   log.error('server error', err, ctx);
 })
 
