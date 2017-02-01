@@ -9,4 +9,5 @@ commander
   .command('show-today', 'show todays events and tasks')
   .command('show-tomorrow', 'show tomorrows events')
   .command('get-google-token', 'get a new google token')
+  .command('set-weekly-goals', 'copies weekly process goals to weekly goals')
   .parse(process.argv);
